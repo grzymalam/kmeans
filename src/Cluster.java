@@ -7,7 +7,6 @@ public class Cluster implements Comparable<Cluster> {
     private List<Vector> points;
     private Vector centroid;
     private int id;
-    private int size;
 
     public Cluster(int id, Vector centroid) {
 
@@ -20,6 +19,9 @@ public class Cluster implements Comparable<Cluster> {
         this.centroid = centroid;
     }
     public Vector getCenter(){
+        return centroid;
+    }
+    public Vector calcNewCenter() {
         ArrayList<Double> center = new ArrayList<Double>();
         for(int i = 0; i < centroid.getSize(); i++){
             double sum = 0;
@@ -30,13 +32,9 @@ public class Cluster implements Comparable<Cluster> {
         }
         return new Vector(center);
     }
-    public Vector getCentroid() {
-        return centroid;
-    }
 
     public void addPoint(Vector point) {
         points.add(point);
-        size++;
     }
     public List<Vector> getPoints() {
         return points;
@@ -52,14 +50,13 @@ public class Cluster implements Comparable<Cluster> {
     }
 
     public int getSize() {
-        return size;
+        return points.size();
     }
     public void clear(){
         points.clear();
-        size = 0;
     }
     public void updateCenter(){
-        centroid = getCenter();
+        centroid = calcNewCenter();
     }
     @Override
     public int compareTo(Cluster o) {

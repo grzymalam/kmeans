@@ -4,7 +4,7 @@ import java.util.Collection;
 public class Vector implements Comparable<Vector>{
     public ArrayList<Double> vals;
     public String className;
-    public Cluster cluster;
+    public int cluster = -1;
 
     public Vector(double... values) {
         vals = new ArrayList<>();
@@ -42,15 +42,15 @@ public class Vector implements Comparable<Vector>{
             vals.set(i, vals.get(i)/squareRooted);
         }
     }
-
-    public double dotProduct(Vector vector){
+    //calculate distance between two vectors
+    public double distance(Vector v){
         double sum = 0;
-        for(int i = 0; i < vector.getSize(); i++){
-            sum += vector.getVals().get(i) * vals.get(i);
+        for(int i = 0; i < vals.size(); i++){
+            sum += Math.pow(vals.get(i) - v.vals.get(i), 2);
         }
-
-        return sum;
+        return Math.sqrt(sum);
     }
+
     //multiply
     public ArrayList<Double> getVals() {
         return vals;
@@ -58,16 +58,14 @@ public class Vector implements Comparable<Vector>{
     public int getSize(){
         return vals.size();
     }
-    public void assignCluster(Cluster cluster){
-        this.cluster = cluster;
-    }
+
     public double get(int n){
         return vals.get(n);
     }
-    public Cluster getCluster(){
+    public int getClusterId(){
         return cluster;
     }
-    public void setCluster(Cluster cluster){
+    public void setClusterId(int cluster){
         this.cluster = cluster;
     }
 
